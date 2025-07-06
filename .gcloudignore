@@ -1,0 +1,3 @@
+# Ignore Python cache and virtual environment files
+__pycache__/
+python-env/

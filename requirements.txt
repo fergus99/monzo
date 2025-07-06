@@ -1,0 +1,2 @@
+bottle==0.13.4
+Monzo-API==1.2.0
