@@ -68,6 +68,7 @@ def move_to_pot(auth:Authentication, amount = 0):
 @app.post('/webhook')
 def webhook():
     event = request.json
+    print(request.headers)
     if monzo.access_token == '':
         response.status = 200
         return "Warning: No access token found"
