@@ -14,8 +14,7 @@ app = Bottle()
 TARGET_BALANCE = 10000  # in pennies (e.g., 1000 = £10.00)
 
 
-POT_NAME = 'Savings'  # Name of the pot to take money from
-
+pot_name = os.environ.get('POT_NAME')  # Default pot name if not set
 client_id=os.environ.get('MONZO_CLIENT_ID')
 client_secret=os.environ.get('MONZO_CLIENT_SECRET')
 redirect_url=os.environ.get('MONZO_REDIRECT_URL')
@@ -56,7 +55,7 @@ def move_to_pot(auth:Authentication, amount = 0):
         return
     account_id = Account.fetch(auth, account_type='uk_retail')[0].account_id
     pots = Pot.fetch(auth, account_id)
-    pot:Pot = next(filter(lambda x: x.deleted is False and x.name == 'Savings', pots))
+    pot:Pot = next(filter(lambda x: x.deleted is False and x.name == pot_name, pots))
     try:
         if amount > 0:
             Pot.deposit(auth, pot=pot, account_id=account_id, amount=amount, dedupe_id=os.urandom(16).hex())
