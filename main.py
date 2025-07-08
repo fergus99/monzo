@@ -11,9 +11,8 @@ from monzo.endpoints.pot import MonzoGeneralError
 
 app = Bottle()
 
-TARGET_BALANCE = 10000  # in pennies (e.g., 1000 = £10.00)
 
-
+target_balance = os.environ.get('TARGET_BALANCE')
 pot_name = os.environ.get('POT_NAME')  # Default pot name if not set
 client_id=os.environ.get('MONZO_CLIENT_ID')
 client_secret=os.environ.get('MONZO_CLIENT_SECRET')
@@ -72,8 +71,8 @@ def webhook():
         response.status = 200
         return "Warning: No access token found"
     balance = get_main_balance()
-    amount_to_move = balance.balance - TARGET_BALANCE
-    print(f"Current balance: {balance.balance}, Target balance: {TARGET_BALANCE}")
+    amount_to_move = balance.balance - target_balance
+    print(f"Current balance: {balance.balance}")
     move_to_pot(monzo, amount_to_move)
     return "OK"
 
