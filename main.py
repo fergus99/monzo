@@ -12,7 +12,7 @@ from monzo.endpoints.pot import MonzoGeneralError
 app = Bottle()
 
 
-target_balance = os.environ.get('TARGET_BALANCE')
+target_balance = int(os.environ.get('TARGET_BALANCE'))
 pot_name = os.environ.get('POT_NAME')  # Default pot name if not set
 client_id=os.environ.get('MONZO_CLIENT_ID')
 client_secret=os.environ.get('MONZO_CLIENT_SECRET')
